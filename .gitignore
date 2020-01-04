@@ -5,6 +5,6 @@
 *.txt
 *.output
 *.zip
+**/stripes/
+**/data
 !enronemail_1h.txt
-stripes/
-data/
