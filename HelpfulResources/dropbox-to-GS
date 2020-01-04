@@ -1,0 +1,7 @@
+curl -L "https://www.dropbox.com/sh/2c0k5adwz36lkcw/AAAAKsjQfF9uHfv-X9mCqr9wa?dl=0" | gsutil cp - gs://w261-bucket
+
+curl -L https://www.dropbox.com/sh/2c0k5adwz36lkcw/AACf_33TeM7rKfEhjEoNmMCaa/PageRank-test_indexed.txt?dl=0 | gsutil cp - gs:w261-bucket
+
+wget -q -O test_graph.txt https://www.dropbox.com/sh/2c0k5adwz36lkcw/AACf_33TeM7rKfEhjEoNmMCaa/PageRank-test_indexed.txt?dl=0 | gsutil -r cp - gs:w261-bucket
+
+curl -L http://kozahamilton.com/bio.shtml | gsutil cp - gs://w261-bucket

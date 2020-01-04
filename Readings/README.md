@@ -1,0 +1,2 @@
+# Readings
+The course schedule in the main repo lists assigned readings for each week of the course. These readings include a mixture of online resources and selections from published texts. This directory contains some, but not all of the readings.
