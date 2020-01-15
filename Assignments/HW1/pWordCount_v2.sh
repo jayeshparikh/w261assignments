@@ -65,6 +65,7 @@ for datachunk in $data.chunk.*; do
     ################ YOUR CODE HERE #############
     # Modify the line from pWordCount_v1.sh, so that  
     # each chunk is individually sorted. 
+    ./$mapper  < $datachunk | sort > $datachunk.counts &
 
     
     ################# (END YOUR CODE)###########
@@ -97,7 +98,8 @@ if [ $# -eq 4 ]
     # write one line to merge the individual chunks,
     # pipe to the reducer script, and redirect to 
     # output file
-    
+    #cat $countfiles | sort -m | ./$reducer  > $data.output
+    sort -m $countfiles | ./$reducer  > $data.output
 
 
     ################# (END YOUR CODE)###########

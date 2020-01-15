@@ -93,6 +93,8 @@ if [ $# -eq 4 ]
     reducer=$4
     ################ YOUR CODE HERE #############
     #Q6c
+    # Aggregate the totals using python script
+    cat $countfiles | ./$reducer  > $data.output
 
 
     ################# (END YOUR CODE)###########

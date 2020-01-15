@@ -33,10 +33,15 @@ for line in sys.stdin:
 
 ############ YOUR CODE HERE #########
 
+#    print(words)
+    for word in words:
+        if word in counts:
+            counts[word] += 1
+        else:
+            counts[word] = 1
 
-
-
-
-
+#print(counts)
+for key in counts:
+    print(key + '\t' + str(counts[key]))
 
 ############ (END) YOUR CODE #########

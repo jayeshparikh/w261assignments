@@ -23,8 +23,26 @@ from collections import defaultdict
 
 ################# YOUR CODE HERE #################
 
+pWord=""
+pCount=0
+# print(type(pCount))
+# stream over lines from Standard Input
+for line in sys.stdin:
+    # extract words & counts
+    word, count  = line.split()
+#     print(type(count))
+#    print(word + count)
+#     print(pWord + str(pCount))
+    # tally counts
+    if (word == pWord): 
+       pCount += int(count)
+    else:
+       if (pWord != ""):
+          print("{}\t{}".format(pWord, pCount))
+       pCount=int(count)
+       pWord=word
 
-
+print("{}\t{}".format(pWord, pCount))
 
 
 
