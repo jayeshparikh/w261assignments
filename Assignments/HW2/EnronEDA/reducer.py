@@ -20,18 +20,32 @@ for line in sys.stdin:
     
 ############ YOUR CODE HERE #########
 
+    if word == current_word:
+        if int(is_spam):
+            spam_count += int(count)
+        else:
+            ham_count += int(count)
+    # OR ...  
+    else:
+        if current_word:
+            if spam_count > 0:
+                print(f'{current_word}\t1\t{spam_count}')
+            if ham_count > 0:
+                print(f'{current_word}\t0\t{ham_count}')
+        # and start a new tally 
+        spam_count, ham_count = 0,0
+        current_word = word
+        if int(is_spam):
+            spam_count += int(count)
+        else:
+            ham_count += int(count)
+        
 
-
-
-
-
-
-
-
-
-
-
-
+# don't forget the last record! 
+if spam_count > 0:
+    print(f'{current_word}\t1\t{spam_count}')
+if ham_count > 0:
+    print(f'{current_word}\t0\t{ham_count}')
 
 
 ############ (END) YOUR CODE #########

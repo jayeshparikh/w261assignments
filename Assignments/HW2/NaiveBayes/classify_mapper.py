@@ -47,15 +47,38 @@ for line in sys.stdin:
     words = re.findall(r'[a-z]+', subject + ' ' + body)
     
     # initialize variables that student code should overwrite
-    logpHam, logpSpam, pred_class = None, None, None
+    logpHam, logpSpam, pred_class = 0.0, 0.0, 0
     
     ################# YOUR CODE HERE ################
     # TIP: try using MODEL.get(word, (0,0)) to access the tuple 
     # of log probabilities without throwing a KeyError!
+    for word in words:
+        #print(word)
+        #print(MODEL.get(word))
+        #print(MODEL.get(word)[0])
+        
+        try:
+            ham_log_cProb, spam_log_cProb = MODEL.get(word)
+        except TypeError:
+            ham_log_cProb = 0.0
+            spam_log_cProb = 0.0
 
+        #print(ham_log_cProb)
+        #print(spam_log_cProb)
+        
+        #logpHam += float(MODEL.get(word)[0])
+        #logpSpam += float(MODEL.get(word)[1]) 
 
+        logpHam += float(ham_log_cProb)
+        logpSpam += float(spam_log_cProb) 
 
-
+    logpHam += float(MODEL.get('ClassPriors')[0])
+    logpSpam += float(MODEL.get('ClassPriors')[1])
+    
+    if logpHam > logpSpam:
+        pred_class = 0
+    else:
+        pred_class = 1
 
     ################# (END) YOUR CODE ##############
     

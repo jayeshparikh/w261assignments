@@ -50,35 +50,70 @@ import os
 
 #################### YOUR CODE HERE ###################
 
+# initialize trackers
+spam_count, ham_count = 0, 0
+classprior_spam_count, classprior_ham_count = 0, 0
+ClassPriors='ClassPriors'
 
 
+def getPartitionKey(word,count):
+    """ 
+    Helper function to assign partition key ('A', 'B', or 'C').
+    Args:  word (str) ; count (int)
+    """   
+    if count < 4:
+        return 'A'
+    elif count < 8:
+        return 'B'
+    else:
+        return 'C'
 
 
+# read from standard input
+for line in sys.stdin:
+    # parse input
+    docID, _class, subject, body = line.split('\t')
+    
+    cur_word = None
+    if int(_class):
+        classprior_spam_count += int(1)
+    else:
+        classprior_ham_count += int(1)
+    #print(body)
+    
+    # tokenize
+    words = re.findall(r'[a-z]+', subject.lower()+ ' ' + body.lower())
+    #words = re.findall(r'[a-z]+', subject + ' ' + body)
+    #print(words)
+    for word in words:
+        if word == cur_word: 
+            #print('if: '+word+' '+cur_word+' '+_class)
+            #print(f'{word}\t{cur_word}')
+            if int(_class):
+                spam_count += int(1)
+            else:
+                ham_count += int(1)
+        # OR emit current total and start a new tally 
+        else: 
+            #print('else: '+word+' '+cur_word+' '+_class)
+            #print({word}+' '+{cur_word})
+            if cur_word:
+                partitionKey = getPartitionKey(word, spam_count) 
+                print(f'{partitionKey}\t{cur_word}\t{ham_count}\t{spam_count}')
+            cur_word = word
+            spam_count, ham_count = 0,0
+            if int(_class):
+                spam_count += int(1)
+            else:
+                ham_count += int(1)
+                
+    partitionKey = getPartitionKey(word, spam_count)        
+    print(f'{partitionKey}\t{cur_word}\t{ham_count}\t{spam_count}')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# print ClassPrior count
+partitionKey = getPartitionKey(word, classprior_spam_count) 
+print(f'{partitionKey}\t{ClassPriors}\t{classprior_ham_count}\t{classprior_spam_count}')
+    
 
 
 #################### (END) YOUR CODE ###################
