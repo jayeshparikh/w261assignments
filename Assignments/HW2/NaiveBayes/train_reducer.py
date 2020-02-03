@@ -28,14 +28,18 @@ import os
 
 cur_word = None
 word_ham_count, word_spam_count = 0, 0
+total_ham_count, total_spam_count = 0, 0
 
 # read input key-value pairs from standard input
 for line in sys.stdin:
     key, word, ham_count, spam_count = line.strip().split()   
-    print(f"{word}\t{ham_count}\t{spam_count}")    
+    #print(f"{word}\t{ham_count}\t{spam_count}")    
 
     # tally counts from current key
-    if word == 'ClassPriors':
+    if word == '!Total':
+        total_ham_count = ham_count
+        total_spam_count = spam_count
+    elif word == 'ClassPriors':
         ham_cProb = int(ham_count) / (int(ham_count) + int(spam_count))
         spam_cProb = int(spam_count) / (int(ham_count) + int(spam_count))
         print(f'{word}\t{ham_count},{spam_count},{ham_cProb},{spam_cProb}')
@@ -44,17 +48,24 @@ for line in sys.stdin:
         word_spam_count += int(spam_count)
     # OR ...  
     else:
-        print('else ', word)
+        #print('else ', word)
         # emit realtive frequency
         if cur_word:
             #print(f'{word}\t{ham_count},{spam_count},{ham_cProb},{spam_cProb}')
-            print(f'{cur_word}\t{word_ham_count},{word_spam_count}')
+            ham_cProb = int(word_ham_count) / int(total_ham_count)
+            spam_cProb = int(word_spam_count) / int(total_spam_count)
+            print(f'{cur_word}\t{word_ham_count},{word_spam_count},{ham_cProb},{spam_cProb}')
+            word_ham_count, word_spam_count = 0,0
         # and start a new tally 
         cur_word  = word
-        word_ham_count, word_spam_count = 0,0
+        word_ham_count += int(ham_count)
+        word_spam_count += int(spam_count)
 
-# don't forget the last record! 
-print(f'{cur_word}\t{word_ham_count},{word_spam_count}')
+# don't forget the last record!
+ham_cProb = int(word_ham_count) / int(total_ham_count)
+spam_cProb = int(word_spam_count) / int(total_spam_count)
+print(f'{cur_word}\t{word_ham_count},{word_spam_count},{ham_cProb},{spam_cProb}')
+#print(f'{cur_word}\t{word_ham_count},{word_spam_count}')
     
 
 

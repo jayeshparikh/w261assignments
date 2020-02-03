@@ -50,12 +50,6 @@ import os
 
 #################### YOUR CODE HERE ###################
 
-# initialize trackers
-spam_count, ham_count = 0, 0
-classprior_spam_count, classprior_ham_count = 0, 0
-ClassPriors='ClassPriors'
-
-
 def getPartitionKey(word,count):
     """ 
     Helper function to assign partition key ('A', 'B', or 'C').
@@ -68,6 +62,12 @@ def getPartitionKey(word,count):
     else:
         return 'C'
 
+# initialize trackers
+spam_count, ham_count = 0, 0
+total_spam_count, total_ham_count = 0, 0
+classprior_spam_count, classprior_ham_count = 0, 0
+ClassPriors='ClassPriors'
+ClassTotal ='!Total'
 
 # read from standard input
 for line in sys.stdin:
@@ -91,8 +91,10 @@ for line in sys.stdin:
             #print(f'{word}\t{cur_word}')
             if int(_class):
                 spam_count += int(1)
+                total_spam_count += int(1)
             else:
                 ham_count += int(1)
+                total_ham_count += int(1)
         # OR emit current total and start a new tally 
         else: 
             #print('else: '+word+' '+cur_word+' '+_class)
@@ -104,8 +106,10 @@ for line in sys.stdin:
             spam_count, ham_count = 0,0
             if int(_class):
                 spam_count += int(1)
+                total_spam_count += int(1)
             else:
                 ham_count += int(1)
+                total_ham_count += int(1)
                 
     partitionKey = getPartitionKey(word, spam_count)        
     print(f'{partitionKey}\t{cur_word}\t{ham_count}\t{spam_count}')
@@ -113,6 +117,7 @@ for line in sys.stdin:
 # print ClassPrior count
 partitionKey = getPartitionKey(word, classprior_spam_count) 
 print(f'{partitionKey}\t{ClassPriors}\t{classprior_ham_count}\t{classprior_spam_count}')
+print(f'{partitionKey}\t{ClassTotal}\t{total_ham_count}\t{total_spam_count}')
     
 
 
