@@ -23,9 +23,9 @@ for line in sys.stdin:
     # OR ...  
     else:
         # store word count total
-        #if cur_word == 'total':   # part b/c - UNCOMMENT & MAKE YOUR CHANGE HERE    
+        if cur_word == '**total':   # part b/c - UNCOMMENT & MAKE YOUR CHANGE HERE    
 
-            total = float(cur_count)  
+            total += float(cur_count)  
         # emit realtive frequency
         if cur_word:
             print(f'{cur_word}\t{cur_count/total}')

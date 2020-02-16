@@ -19,5 +19,5 @@ for line in sys.stdin:
     # emit words and count of 1 plus total counter
     for word in words:
         print(f'{word}\t{1}')
-        #print(f'total\t{1}')  # part b/c - UNCOMMENT & MAKE YOUR CHANGE HERE
+        print(f'**total\t{1}')  # part b/c - UNCOMMENT & MAKE YOUR CHANGE HERE
 

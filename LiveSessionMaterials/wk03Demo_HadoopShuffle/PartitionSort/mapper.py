@@ -14,21 +14,23 @@ def getPartitionKey(word,count):
     Helper function to assign partition key ('A', 'B', or 'C').
     Args:  word (str) ; count (int)
     """
-    ############ YOUR CODE HERE ##########
-
-
-
-
-
-
     
-    # provided implementation: (run this first, then make your changes in part e)
-    if word[0] < 'h': 
-        return  'A'
-    elif word[0] < 'p':
-        return  'B'
+    ############ YOUR CODE HERE ##########
+    if count < 4:
+        return 'A'
+    elif count < 8:
+        return 'B'
     else:
         return 'C'
+
+        
+    # provided implementation: (run this first, then make your changes in part e)
+    #if word[0] < 'h': 
+    #    return  'A'
+    #elif word[0] < 'p':
+    #    return  'B'
+    #else:
+    #    return 'C'
     ############ (END) YOUR CODE #########
     
 # read from standard input
