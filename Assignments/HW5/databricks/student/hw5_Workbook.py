@@ -124,7 +124,7 @@ spark
 # MAGIC %md ### Q2 Student Answers:
 # MAGIC > __a)__ The graph described in Figure 5.1 in Lin & Dyer is a sparse graph. The major problem with an adjacency matrix representation of sparse graphs is it's \\( O(n^2) \\) space requirements.
 # MAGIC 
-# MAGIC > __b)__ Type your answer here!
+# MAGIC > __b)__ This graph is directed as it shows directed edges from the nodes.  If the graph is undirected, the adjacency matrix is symmetric whereas for a directed graph, the adjacency matrix does not need to be symmetric.
 
 # COMMAND ----------
 
@@ -155,7 +155,10 @@ def get_adj_matr(graph):
     n = len(graph['nodes'])
     adj_matr = pd.DataFrame(0, columns = graph['nodes'], index = graph['nodes'])
     ############### YOUR CODE HERE ##################
-    
+    for edge in graph['edges']:
+        adj_matr.set_value(edge[0], edge[1], 1)
+        
+    #print(len(graph['edges']))
     ############### (END) YOUR CODE #################
     return adj_matr
 
@@ -178,7 +181,10 @@ def get_adj_list(graph):
     """
     adj_list = {node: [] for node in graph['nodes']}
     ############### YOUR CODE HERE ##################
-
+    for node in graph['nodes']:
+       for edge in graph['edges']:
+          if edge[0] == node:
+            adj_list[node].append(edge[1])
     
     ############### (END) YOUR CODE #################
     return adj_list
