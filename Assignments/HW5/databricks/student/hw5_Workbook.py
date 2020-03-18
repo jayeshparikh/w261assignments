@@ -218,13 +218,13 @@ print(TOY_ADJ_LIST)
 # COMMAND ----------
 
 # MAGIC %md ### Q3 Student Answers:
-# MAGIC > __a)__ Type your answer here!
+# MAGIC > __a)__ PageRank is used to give each page a relative score of importance and authority by evaluating the quality and quantity of its links.
 # MAGIC 
-# MAGIC > __b)__ Type your answer here!
+# MAGIC > __b)__ Markov Property in mathematical term state that the conditional distribution of future states of the process given present and past states depends only on the present state and not at all on the past states (memoryless property). PageRank models the network of Web pages by a Markov chain. This network is a huge ﬁnite state machine, where every state is a page and that the page ranks are proportional to the stationary probabilities of the states in the Markov chain. 
 # MAGIC 
-# MAGIC > __c)__ Type your answer here! 
+# MAGIC > __c)__ \\( n \\) states are the pages (websites).  \\( n \times n \\) represents a transition matrix -> a Markov process whose steady state distribution tells about which  pages we spend a lot of time on. This distribution speciﬁes what proportion of time on average is spent at speciﬁc node during an inﬁnitely long random walk. One issue with this approach is the fact that chain can ‘get stuck’ at the nodes that have no outgoing links, and the nodes with no incoming links are never visited in the random walk. 
 # MAGIC 
-# MAGIC > __d)__ Type your answer here!
+# MAGIC > __d)__ A right stochastic matrix is a real square matrix, with each row summing to 1.
 # MAGIC 
 # MAGIC > __e)__ Type your answer here! 
 
@@ -237,7 +237,7 @@ TOY_ADJ_MATR
 
 # part d - use TOY_ADJ_MATR to create a right stochastic transition matrix for this graph
 ################ YOUR CODE HERE #################
-transition_matrix = None # replace with your code
+transition_matrix = TOY_ADJ_MATR / TOY_ADJ_MATR.sum(axis=1)[:,None] # replace with your code
 
 ################ (END) YOUR CODE #################
 print(transition_matrix)
@@ -262,12 +262,16 @@ def power_iteration(xInit, tMatrix, nIter, verbose = True):
     NOTE: if the 'verbose' flag is on, your function should print the step
     number and the current matrix at each iteration.
     """
-    state_vector = None
+    state_vector = xInit
     ################ YOUR CODE HERE #################
-
-    
-    
-    
+    for ix in range(nIter):    
+        
+        new_state_vector = state_vector@tMatrix
+        state_vector = new_state_vector
+        
+        if verbose:
+            print(f'Step {ix}: {state_vector}')
+      
     ################ (END) YOUR CODE #################
     return state_vector
 
@@ -312,9 +316,9 @@ states = power_iteration(xInit, transition_matrix, 10, verbose = True)
 # COMMAND ----------
 
 # MAGIC %md ### Q4 Student Answers:
-# MAGIC > __a)__ Type your answer here!
+# MAGIC > __a)__ Node E does not have outgoing edges so the probabililities are undefined
 # MAGIC 
-# MAGIC > __b)__ Type your answer here!
+# MAGIC > __b)__ Node E is the dangling node which is causing probabilities to be undefined. 
 # MAGIC 
 # MAGIC > __c)__ Type your answer here!
 # MAGIC 
@@ -342,9 +346,12 @@ display(nx.draw(G, pos=nx.circular_layout(G), with_labels=True, alpha = 0.5))
 # part a - run 10 steps of the power iteration method here
 # HINT: feel free to use the functions get_adj_matr() and power_iteration() you wrote above
 ################ YOUR CODE HERE #################
-
-
-
+TOY2_ADJ_MATR = get_adj_matr(TOY2_GRAPH)
+print(TOY2_ADJ_MATR)
+transition_matrix2 = TOY2_ADJ_MATR / TOY2_ADJ_MATR.sum(axis=1)[:,None]
+print(transition_matrix2)
+xInit2 = np.array([1.0, 0, 0, 0, 0]) # note that this initial state will not affect the convergence states
+states2 = power_iteration(xInit2, transition_matrix2, 10, verbose = True)
 
 ################ (END) YOUR CODE #################
 
