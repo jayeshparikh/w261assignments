@@ -226,7 +226,7 @@ print(TOY_ADJ_LIST)
 # MAGIC 
 # MAGIC > __d)__ A right stochastic matrix is a real square matrix, with each row summing to 1.
 # MAGIC 
-# MAGIC > __e)__ Type your answer here! 
+# MAGIC > __e)__ 3 iteration to converge...node E is the highest ranked which matches what is observed on the graph
 
 # COMMAND ----------
 
@@ -262,12 +262,16 @@ def power_iteration(xInit, tMatrix, nIter, verbose = True):
     NOTE: if the 'verbose' flag is on, your function should print the step
     number and the current matrix at each iteration.
     """
-    state_vector = xInit
+    #state_vector = xInit
+    state_vector = xInit.dot(tMatrix)
+    
     ################ YOUR CODE HERE #################
     for ix in range(nIter):    
         
-        new_state_vector = state_vector@tMatrix
-        state_vector = new_state_vector
+        tMatrix = tMatrix.dot(tMatrix)
+        state_vector = state_vector.dot(tMatrix)
+        #state_vector = state_vector @ tMatrix
+        #state_vector = new_state_vector
         
         if verbose:
             print(f'Step {ix}: {state_vector}')
@@ -279,6 +283,7 @@ def power_iteration(xInit, tMatrix, nIter, verbose = True):
 
 # part e - run 10 steps of the power_iteration (RUN THIS CELL AS IS)
 xInit = np.array([1.0, 0, 0, 0, 0]) # note that this initial state will not affect the convergence states
+#xInit = np.ones(transition_matrix.shape[1]) / (transition_matrix.shape[1])
 states = power_iteration(xInit, transition_matrix, 10, verbose = True)
 
 # COMMAND ----------
@@ -320,11 +325,11 @@ states = power_iteration(xInit, transition_matrix, 10, verbose = True)
 # MAGIC 
 # MAGIC > __b)__ Node E is the dangling node which is causing probabilities to be undefined. 
 # MAGIC 
-# MAGIC > __c)__ Type your answer here!
+# MAGIC > __c)__ Irreducible: There is a path from every node to every other node. No, a webgraph may not be naturally irreducible as most of the times surfer would be jumping around different URLs and not necessarily follow a path from one node to another to create a 'nice' graph
 # MAGIC 
-# MAGIC > __d)__ Type your answer here!  
+# MAGIC > __d)__ Aperiodic: The period, or greatest common divisor (GCD), of all cycle lengths is 1. A graph is aperiodic if the greatest common divisor of the lengths of its cycles is one; this greatest common divisor for a graph G is called the period of G. No, webgraph is not naturally aperiodic as length of its cycles can be greater than 1
 # MAGIC 
-# MAGIC > __e)__ Type your answer here!  
+# MAGIC > __e)__ Webgraph modifications made to guarantee aperiodicity and irreducibility are 1) Stochasticity adjustment to resolves dangling edges and 2) Primitivity adjustment to incorporate teleportation. Both these modifications ensure that the Markov process underlying the webgraph will actually converge on a steady state distribution
 
 # COMMAND ----------
 
